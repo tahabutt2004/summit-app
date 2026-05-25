@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Summit Register | ISM DATA SCIENCE SUMMIT{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="hero-grid">
+        <div class="hero-copy">
+            <div>
+                <p class="eyebrow mb-3">Summit Booking</p>
+                <h1>Register for the summit.</h1>
+            </div>
+            <p class="mb-0">
+                Choose an active upcoming summit location before registration reaches capacity.
+            </p>
+        </div>
+
+        <div class="talwar-card">
+            <p class="eyebrow mb-2">Registration</p>
+            <h2 class="card-title mb-4">Book a Summit</h2>
+
+            {% for message in app.flashes('booking_error') %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+            {% for message in app.flashes('booking_success') %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+
+            {{ form_start(bookingForm, {'attr': {'class': 'd-grid gap-3'}}) }}
+                {{ form_row(bookingForm.summitLocation) }}
+                {{ form_row(bookingForm.mealPreference) }}
+                {{ form_row(bookingForm.specialNeeds) }}
+
+                <button class="btn btn-forge btn-lg mt-2" type="submit">Confirm Booking</button>
+            {{ form_end(bookingForm) }}
+
+            <p class="muted-copy mt-4 mb-0">
+                Already booked?
+                <a class="link-gold" href="{{ path('app_my_bookings') }}">View my bookings</a>
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login | ISM DATA SCIENCE SUMMIT{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="hero-grid">
+        <div class="hero-copy">
+            <div>
+                <p class="eyebrow mb-3">Summit Access</p>
+                <h1>Welcome Back</h1>
+            </div>
+            <p class="mb-0">
+                Sign in to manage your ISM DATA SCIENCE SUMMIT profile, bookings, and event participation.
+            </p>
+        </div>
+
+        <div class="talwar-card">
+            <p class="eyebrow mb-2">Secure Access</p>
+            <h2 class="card-title mb-4">Login</h2>
+
+            <form method="post" class="d-grid gap-3">
+                {% if error %}
+                    <div class="alert alert-danger mb-2">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="alert mb-2">
+                        You are logged in as {{ app.user.userIdentifier }}.
+                        <a class="link-gold" href="{{ logout_path() }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <div>
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control form-control-lg" autocomplete="email" required autofocus>
+                </div>
+
+                <div>
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control form-control-lg" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="_remember_me" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+
+                <button class="btn btn-forge btn-lg mt-2" type="submit">Login</button>
+
+                <p class="muted-copy mb-0">
+                    New to the summit?
+                    <a class="link-gold" href="{{ path('app_register') }}">Register</a>
+                </p>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}

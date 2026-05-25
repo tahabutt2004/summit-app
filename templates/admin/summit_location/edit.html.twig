@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Summit Location | Admin{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="talwar-card">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 mb-4">
+            <div>
+                <p class="eyebrow mb-2">Admin Area</p>
+                <h1 class="page-title mb-3">Edit Location</h1>
+                <p class="lead-text mb-0">Update this summit venue while keeping the event schedule organized.</p>
+            </div>
+            <form class="align-content-start" method="post" action="{{ path('admin_summit_location_delete', {'id': summitLocation.id}) }}" onsubmit="return confirm('Delete this summit location?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete_summit_location_' ~ summitLocation.id) }}">
+                <button class="btn btn-ember" type="submit">Delete</button>
+            </form>
+        </div>
+
+        {% include 'admin/summit_location/_form.html.twig' with {'button_label': 'Save Changes'} %}
+    </section>
+</main>
+{% endblock %}

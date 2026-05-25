@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}ISM DATA SCIENCE SUMMIT{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect width=%22128%22 height=%22128%22 rx=%2224%22 fill=%22%23ffffff%22/><text x=%2264%22 y=%2272%22 fill=%22%23002f5f%22 font-size=%2242%22 text-anchor=%22middle%22 font-family=%22Georgia%22 font-weight=%22700%22>ISM</text><path d=%22M24 90h80%22 stroke=%22%23f7b23b%22 stroke-width=%228%22 stroke-linecap=%22round%22/></svg>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        {% block stylesheets %}
+            <style>
+                :root {
+                    --ism-navy: #002f5f;
+                    --ism-navy-dark: #002447;
+                    --ism-blue-soft: #edf4fb;
+                    --ism-yellow: #f7b23b;
+                    --ism-yellow-soft: #ffe3b3;
+                    --ism-text: #052647;
+                    --ism-muted: #5c6b7d;
+                    --ism-border: rgba(0, 47, 95, 0.2);
+                    --ism-shadow: 0 18px 45px rgba(0, 47, 95, 0.12);
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    min-height: 100vh;
+                    margin: 0;
+                    color: var(--ism-text);
+                    background: #ffffff;
+                    font-family: Georgia, "Times New Roman", serif;
+                    overflow-x: hidden;
+                }
+
+                body::before,
+                body::after {
+                    display: none;
+                }
+
+                .talwar-page {
+                    min-height: 100vh;
+                    position: relative;
+                    padding-bottom: 0;
+                    background:
+                        linear-gradient(180deg, #ffffff 0%, #f7fafc 58%, #eef4fa 100%),
+                        radial-gradient(circle at 92% 18%, rgba(247, 178, 59, 0.18), transparent 24%);
+                }
+
+                .talwar-nav {
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                    padding: 0;
+                    border-bottom: 1px solid var(--ism-border);
+                    background: #ffffff;
+                    box-shadow: 0 8px 24px rgba(0, 47, 95, 0.08);
+                }
+
+                .talwar-nav::before {
+                    position: absolute;
+                    inset: 0 0 auto 0;
+                    height: 5px;
+                    content: "";
+                    background: linear-gradient(90deg, var(--ism-navy), var(--ism-yellow), var(--ism-navy));
+                }
+
+                .talwar-nav .container {
+                    min-height: 112px;
+                    align-items: stretch;
+                    flex-wrap: wrap;
+                    gap: 0 28px;
+                }
+
+                .navbar-brand {
+                    min-width: 300px;
+                    padding: 22px 0 16px;
+                    color: var(--ism-navy);
+                }
+
+                .brand-mark {
+                    display: none;
+                }
+
+                .brand-text {
+                    display: inline-grid;
+                    color: var(--ism-navy);
+                    font-size: 0;
+                    letter-spacing: 0;
+                    text-transform: none;
+                }
+
+                .brand-text::before {
+                    content: "ISM";
+                    color: var(--ism-navy);
+                    font-size: clamp(2.6rem, 4vw, 3.55rem);
+                    font-weight: 700;
+                    line-height: 0.86;
+                    letter-spacing: 0;
+                }
+
+                .brand-text::after {
+                    content: "International School of Management\\AUniversity of Applied Sciences";
+                    white-space: pre-line;
+                    color: var(--ism-navy);
+                    font-size: 0.78rem;
+                    font-family: Georgia, "Times New Roman", serif;
+                    font-weight: 700;
+                    line-height: 1.18;
+                    letter-spacing: 0.04em;
+                    text-transform: uppercase;
+                    border-top: 2px solid var(--ism-navy);
+                    margin-top: 7px;
+                    padding-top: 5px;
+                }
+
+                .navbar-collapse {
+                    align-self: flex-end;
+                }
+
+                .navbar-nav {
+                    width: 100%;
+                    justify-content: flex-end;
+                }
+
+                .nav-link {
+                    position: relative;
+                    border: 0;
+                    border-radius: 0;
+                    padding: 1rem 0.9rem 1.35rem;
+                    color: var(--ism-navy);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 1.02rem;
+                    font-weight: 700;
+                    transition: color 180ms ease, background 180ms ease;
+                }
+
+                .nav-link::after {
+                    position: absolute;
+                    left: 0.9rem;
+                    right: 0.9rem;
+                    bottom: 0.78rem;
+                    height: 3px;
+                    content: "";
+                    border-radius: 999px;
+                    background: transparent;
+                    transition: background 180ms ease;
+                }
+
+                .nav-link:hover,
+                .nav-link:focus {
+                    color: var(--ism-navy-dark);
+                    background: rgba(247, 178, 59, 0.14);
+                }
+
+                .nav-link:hover::after,
+                .nav-link:focus::after {
+                    background: var(--ism-yellow);
+                }
+
+                .navbar-toggler {
+                    margin-top: 26px;
+                    border-color: var(--ism-border);
+                }
+
+                .navbar-toggler-icon {
+                    filter: none;
+                }
+
+                .auth-shell {
+                    position: relative;
+                    z-index: 1;
+                    width: min(1180px, calc(100% - 36px));
+                    margin: 0 auto;
+                    padding: clamp(34px, 5vw, 64px) 0;
+                }
+
+                .hero-grid {
+                    display: grid;
+                    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+                    gap: clamp(24px, 4vw, 44px);
+                    align-items: stretch;
+                }
+
+                .hero-copy,
+                .talwar-card {
+                    border: 1px solid var(--ism-border);
+                    background: #ffffff;
+                    box-shadow: var(--ism-shadow);
+                }
+
+                .hero-copy {
+                    position: relative;
+                    min-height: 430px;
+                    padding: clamp(30px, 4vw, 54px);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    overflow: hidden;
+                    border-radius: 24px;
+                    background:
+                        linear-gradient(135deg, #ffffff 0%, #ffffff 62%, #f8fbff 100%);
+                }
+
+                .eyebrow {
+                    color: var(--ism-navy);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 0.82rem;
+                    font-weight: 700;
+                    letter-spacing: 0.16em;
+                    text-transform: uppercase;
+                }
+
+                h1,
+                .page-title {
+                    color: var(--ism-navy);
+                    font-size: clamp(2.45rem, 5.3vw, 5.45rem);
+                    line-height: 0.98;
+                    letter-spacing: 0;
+                    text-shadow: none;
+                }
+
+                .hero-copy p,
+                .lead-text {
+                    color: var(--ism-muted);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 1.08rem;
+                    line-height: 1.75;
+                }
+
+                .talwar-card {
+                    border-radius: 24px;
+                    padding: clamp(26px, 4vw, 46px);
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .talwar-card::before {
+                    position: absolute;
+                    inset: 0;
+                    content: "";
+                    pointer-events: none;
+                    background:
+                        linear-gradient(90deg, transparent, rgba(0, 47, 95, 0.04), transparent),
+                        radial-gradient(circle at 96% 4%, rgba(247, 178, 59, 0.2), transparent 22%);
+                }
+
+                .talwar-card > * {
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .card-title {
+                    color: var(--ism-navy);
+                    font-size: clamp(1.7rem, 3vw, 2.5rem);
+                    letter-spacing: 0;
+                }
+
+                label,
+                .form-label {
+                    color: var(--ism-navy);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 0.96rem;
+                    font-weight: 700;
+                }
+
+                .form-control,
+                .form-select,
+                .form-check-input,
+                textarea.form-control {
+                    color: var(--ism-text);
+                    border: 1px solid var(--ism-border);
+                    border-radius: 12px;
+                    background-color: #ffffff;
+                    box-shadow: none;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .form-select option {
+                    color: var(--ism-text);
+                    background: #ffffff;
+                }
+
+                .form-control:focus,
+                .form-select:focus,
+                textarea.form-control:focus {
+                    color: var(--ism-text);
+                    border-color: var(--ism-navy);
+                    background-color: #ffffff;
+                    box-shadow: 0 0 0 0.2rem rgba(0, 47, 95, 0.14);
+                }
+
+                .form-check-input:checked {
+                    border-color: var(--ism-navy);
+                    background-color: var(--ism-navy);
+                }
+
+                .form-check-label {
+                    color: var(--ism-muted);
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .btn-forge,
+                .btn-primary,
+                .btn-success {
+                    border: 1px solid var(--ism-yellow);
+                    border-radius: 18px;
+                    color: var(--ism-navy);
+                    background: linear-gradient(135deg, #ffc65f, var(--ism-yellow));
+                    box-shadow: 0 12px 26px rgba(247, 178, 59, 0.26);
+                    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 800;
+                }
+
+                .btn-forge:hover,
+                .btn-primary:hover,
+                .btn-success:hover {
+                    color: var(--ism-navy);
+                    transform: translateY(-2px);
+                    filter: brightness(1.02);
+                    box-shadow: 0 18px 34px rgba(247, 178, 59, 0.34);
+                }
+
+                .btn-danger,
+                .btn-ember {
+                    border: 1px solid var(--ism-navy);
+                    border-radius: 14px;
+                    color: var(--ism-navy);
+                    background: #ffffff;
+                    box-shadow: none;
+                    transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 700;
+                }
+
+                .btn-danger:hover,
+                .btn-ember:hover {
+                    color: #ffffff;
+                    background: var(--ism-navy);
+                    border-color: var(--ism-navy);
+                    transform: translateY(-2px);
+                    box-shadow: 0 12px 22px rgba(0, 47, 95, 0.22);
+                }
+
+                .btn-ghost {
+                    border: 1px solid var(--ism-border);
+                    border-radius: 14px;
+                    color: var(--ism-navy);
+                    background: #ffffff;
+                    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: 700;
+                }
+
+                .btn-ghost:hover {
+                    color: var(--ism-navy);
+                    border-color: var(--ism-yellow);
+                    background: var(--ism-yellow-soft);
+                    transform: translateY(-2px);
+                }
+
+                .alert {
+                    border-radius: 16px;
+                    border-color: rgba(247, 178, 59, 0.54);
+                    color: var(--ism-navy);
+                    background: #fff3d9;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .table-dark {
+                    --bs-table-bg: #ffffff;
+                    --bs-table-striped-bg: #f7fafc;
+                    --bs-table-hover-bg: #fff3d9;
+                    --bs-table-border-color: rgba(0, 47, 95, 0.18);
+                    --bs-table-color: var(--ism-text);
+                    --bs-table-striped-color: var(--ism-text);
+                    --bs-table-hover-color: var(--ism-text);
+                    color: var(--ism-text);
+                    border-color: var(--ism-border);
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .table-dark th,
+                .table-dark td {
+                    color: var(--ism-text);
+                }
+
+                .profile-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 16px;
+                }
+
+                .profile-field {
+                    min-height: 96px;
+                    padding: 18px;
+                    border: 1px solid var(--ism-border);
+                    border-radius: 18px;
+                    background: #ffffff;
+                }
+
+                .profile-field.full {
+                    grid-column: 1 / -1;
+                }
+
+                .profile-label {
+                    margin-bottom: 8px;
+                    color: var(--ism-navy);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 0.78rem;
+                    font-weight: 800;
+                    letter-spacing: 0.13em;
+                    text-transform: uppercase;
+                }
+
+                .profile-value {
+                    margin: 0;
+                    color: var(--ism-text);
+                    overflow-wrap: anywhere;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .muted-copy {
+                    color: var(--ism-muted);
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                .link-gold {
+                    color: var(--ism-navy);
+                    text-decoration: underline;
+                    text-decoration-color: var(--ism-yellow);
+                    text-underline-offset: 3px;
+                    font-weight: 700;
+                }
+
+                .link-gold:hover {
+                    color: var(--ism-navy-dark);
+                    text-decoration-color: var(--ism-navy);
+                }
+
+                .ism-action-bar {
+                    position: relative;
+                    z-index: 9;
+                    background: var(--ism-navy);
+                    box-shadow: 0 -12px 30px rgba(0, 47, 95, 0.12);
+                    margin-top: 40px;
+                }
+
+                .ism-action-bar .container {
+                    min-height: 72px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: clamp(18px, 8vw, 140px);
+                    flex-wrap: wrap;
+                }
+
+                .ism-action-link {
+                    color: #ffffff;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    text-decoration: none;
+                    padding: 0.85rem 1rem;
+                    border-radius: 12px;
+                    transition: background 180ms ease, color 180ms ease;
+                }
+
+                .ism-action-link:hover,
+                .ism-action-link:focus {
+                    color: var(--ism-navy);
+                    background: var(--ism-yellow);
+                }
+
+                @media (max-width: 991.98px) {
+                    .talwar-nav .container {
+                        min-height: auto;
+                    }
+
+                    .navbar-brand {
+                        min-width: 230px;
+                    }
+
+                    .navbar-nav {
+                        padding-bottom: 16px;
+                    }
+
+                    .nav-link {
+                        padding: 0.72rem 0.85rem;
+                    }
+
+                    .nav-link::after {
+                        bottom: 0.35rem;
+                    }
+
+                    .hero-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .hero-copy {
+                        min-height: 320px;
+                    }
+                }
+
+                @media (max-width: 575.98px) {
+                    .auth-shell {
+                        width: min(100% - 20px, 1180px);
+                        padding-top: 28px;
+                    }
+
+                    .talwar-card,
+                    .hero-copy {
+                        padding: 22px;
+                        border-radius: 24px;
+                    }
+
+                    .profile-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            </style>
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+        {% endblock %}
+
+        {% set frankenphpHotReload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
+        {% if frankenphpHotReload %}
+        <meta name="frankenphp-hot-reload:url" content="{{ frankenphpHotReload }}">
+        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
+        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
+        {% endif %}
+    </head>
+    <body>
+        <div class="talwar-page">
+            <nav class="navbar navbar-expand-lg talwar-nav">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" href="{{ app.user ? path('app_profile') : path('app_login') }}">
+                        <span class="brand-text">ISM International School of Management</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mainNavigation">
+                        <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2 pt-3 pt-lg-0">
+                            {% if app.user %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a class="nav-link" href="{{ path('admin_summit_location_index') }}">Admin</a>
+                                    <a class="nav-link" href="{{ path('admin_registration_index') }}">Registrations</a>
+                                {% endif %}
+                                <a class="nav-link" href="{{ path('app_summit_register') }}">Summit Register</a>
+                                <a class="nav-link" href="{{ path('app_my_bookings') }}">My Bookings</a>
+                                <a class="nav-link" href="{{ path('app_profile') }}">Profile</a>
+                                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                                <a class="nav-link" href="{{ path('app_register') }}">Register</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {% block body %}{% endblock %}
+
+            <footer class="ism-action-bar">
+                <div class="container">
+                    {% if app.user %}
+                        <a class="ism-action-link" href="{{ path('app_summit_register') }}">Summit Registration</a>
+                        <a class="ism-action-link" href="{{ path('app_my_bookings') }}">My Bookings</a>
+                        <a class="ism-action-link" href="{{ path('app_profile') }}">Profile</a>
+                    {% else %}
+                        <a class="ism-action-link" href="{{ path('app_login') }}">Login</a>
+                        <a class="ism-action-link" href="{{ path('app_register') }}">Create Account</a>
+                        <a class="ism-action-link" href="{{ path('app_login') }}">ISM Data Science Summit</a>
+                    {% endif %}
+                </div>
+            </footer>
+        </div>
+    </body>
+</html>

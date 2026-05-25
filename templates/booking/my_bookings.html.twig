@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Bookings | ISM DATA SCIENCE SUMMIT{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="talwar-card mb-4">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 mb-4">
+            <div>
+                <p class="eyebrow mb-2">Summit Bookings</p>
+                <h1 class="page-title mb-3">My Bookings</h1>
+                <p class="lead-text mb-0">Upcoming and previous summit reservations tied to your account.</p>
+            </div>
+            <div class="d-flex align-content-start">
+                <a class="btn btn-forge" href="{{ path('app_summit_register') }}">Register Again</a>
+            </div>
+        </div>
+
+        {% for message in app.flashes('booking_error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('booking_success') %}
+            <div class="alert">{{ message }}</div>
+        {% endfor %}
+
+        <h2 class="card-title mb-3">Upcoming</h2>
+        <div class="table-responsive mb-5">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>City</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Meal</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in upcomingBookings %}
+                        {% set location = booking.summitLocation %}
+                        <tr>
+                            <td>{{ location.locationName }}</td>
+                            <td>{{ location.city }}</td>
+                            <td>{{ location.eventDate|date('Y-m-d H:i') }}</td>
+                            <td>{{ booking.status|title }}</td>
+                            <td>{{ booking.mealPreference ?: 'Not provided' }}</td>
+                            <td class="text-end">
+                                {% if booking.status == 'active' %}
+                                    <form method="post" action="{{ path('app_booking_cancel', {'id': booking.id}) }}" onsubmit="return confirm('Cancel this booking?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('cancel_booking_' ~ booking.id) }}">
+                                        <button class="btn btn-sm btn-ember" type="submit">Cancel</button>
+                                    </form>
+                                {% else %}
+                                    <span class="muted-copy">No action</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center muted-copy py-5">No upcoming bookings yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="card-title mb-3">Previous</h2>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>City</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Meal</th>
+                        <th>Special Needs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in previousBookings %}
+                        {% set location = booking.summitLocation %}
+                        <tr>
+                            <td>{{ location.locationName }}</td>
+                            <td>{{ location.city }}</td>
+                            <td>{{ location.eventDate|date('Y-m-d H:i') }}</td>
+                            <td>{{ booking.status|title }}</td>
+                            <td>{{ booking.mealPreference ?: 'Not provided' }}</td>
+                            <td>{{ booking.specialNeeds ?: 'Not provided' }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center muted-copy py-5">No previous bookings yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}

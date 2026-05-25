@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Summit Location | Admin{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="talwar-card">
+        <p class="eyebrow mb-2">Admin Area</p>
+        <h1 class="page-title mb-3">Create Location</h1>
+        <p class="lead-text mb-4">Add a new summit venue to the event schedule.</p>
+
+        {% include 'admin/summit_location/_form.html.twig' with {'button_label': 'Create Location'} %}
+    </section>
+</main>
+{% endblock %}

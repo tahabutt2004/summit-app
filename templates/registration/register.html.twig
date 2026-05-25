@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register | ISM DATA SCIENCE SUMMIT{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="hero-grid">
+        <div class="hero-copy">
+            <div>
+                <p class="eyebrow mb-3">Summit Registration</p>
+                <h1>Create your account.</h1>
+            </div>
+            <p class="mb-0">
+                Create your ISM DATA SCIENCE SUMMIT account to register for sessions and manage your attendee profile.
+            </p>
+        </div>
+
+        <div class="talwar-card">
+            <p class="eyebrow mb-2">New Account</p>
+            <h2 class="card-title mb-4">Register</h2>
+
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm, {'attr': {'class': 'd-grid gap-3'}}) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <button type="submit" class="btn btn-forge btn-lg mt-2">Register</button>
+            {{ form_end(registrationForm) }}
+
+            <p class="muted-copy mt-4 mb-0">
+                Already registered?
+                <a class="link-gold" href="{{ path('app_login') }}">Login</a>
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock %}

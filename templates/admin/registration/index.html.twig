@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registrations | Admin{% endblock %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="talwar-card">
+        <div class="d-flex flex-column flex-lg-row justify-content-between gap-4 mb-4">
+            <div>
+                <p class="eyebrow mb-2">Admin Area</p>
+                <h1 class="page-title mb-3">Registrations</h1>
+                <p class="lead-text mb-0">Manage summit participant registrations and export the current view.</p>
+            </div>
+            <div class="d-flex flex-wrap align-content-start gap-2">
+                <a class="btn btn-ghost" href="{{ path('admin_summit_location_index') }}">Summit Locations</a>
+                <a class="btn btn-forge" href="{{ path('admin_registration_export', app.request.query.all) }}">Excel Export</a>
+            </div>
+        </div>
+
+        <form class="row g-3 mb-4" method="get">
+            <div class="col-md-3">
+                <label class="form-label" for="status">Status</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="">All statuses</option>
+                    <option value="active" {% if currentStatus == 'active' %}selected{% endif %}>Active</option>
+                    <option value="cancelled" {% if currentStatus == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="city">City</label>
+                <select class="form-select" id="city" name="city">
+                    <option value="">All cities</option>
+                    {% for city in cities %}
+                        <option value="{{ city }}" {% if currentCity == city %}selected{% endif %}>{{ city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="sort">Sort By</label>
+                <select class="form-select" id="sort" name="sort">
+                    <option value="createdAt" {% if currentSort == 'createdAt' %}selected{% endif %}>Created At</option>
+                    <option value="eventDate" {% if currentSort == 'eventDate' %}selected{% endif %}>Event Date</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="direction">Direction</label>
+                <select class="form-select" id="direction" name="direction">
+                    <option value="DESC" {% if currentDirection == 'DESC' %}selected{% endif %}>Newest First</option>
+                    <option value="ASC" {% if currentDirection == 'ASC' %}selected{% endif %}>Oldest First</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end gap-2">
+                <button class="btn btn-forge w-100" type="submit">Apply</button>
+                <a class="btn btn-ghost" href="{{ path('admin_registration_index') }}">Reset</a>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Email</th>
+                        <th>Summit City</th>
+                        <th>Event Date</th>
+                        <th>Meal Preference</th>
+                        <th>Special Needs</th>
+                        <th>Status</th>
+                        <th>Created At</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for registration in registrations %}
+                        {% set summitLocation = registration.summitLocation %}
+                        <tr>
+                            <td>{{ registration.id }}</td>
+                            <td>{{ registration.user.email }}</td>
+                            <td>{{ summitLocation.city }}</td>
+                            <td>{{ summitLocation.eventDate ? summitLocation.eventDate|date('Y-m-d H:i') : '' }}</td>
+                            <td>{{ registration.mealPreference ?: 'Not provided' }}</td>
+                            <td>{{ registration.specialNeeds ?: 'Not provided' }}</td>
+                            <td>{{ registration.status|title }}</td>
+                            <td>{{ registration.createdAt ? registration.createdAt|date('Y-m-d H:i') : '' }}</td>
+                            <td class="text-end">
+                                <div class="d-inline-flex flex-wrap gap-2 justify-content-end">
+                                    <a class="btn btn-sm btn-ghost" href="{{ path('admin_registration_edit', {'id': registration.id}) }}">Edit</a>
+                                    <form method="post" action="{{ path('admin_registration_delete', {'id': registration.id}) }}" onsubmit="return confirm('Delete this registration?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete_registration_' ~ registration.id) }}">
+                                        <button class="btn btn-sm btn-ember" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="9" class="text-center muted-copy py-5">No registrations found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}
