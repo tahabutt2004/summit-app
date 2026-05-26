@@ -45,10 +45,10 @@ This project allows users to create an account, manage their profile, register f
 
 ## Installation
 
-Clone the repository:
+Clone or download the project:
 
 ```bash
-git clone https://github.com/tahabutt2004/summit-app.git
+git clone <repository-url>
 cd summit-app
 ```
 
@@ -94,7 +94,24 @@ php -S 127.0.0.1:8001 -t public
 Open in browser:
 
 ```text
-http://127.0.0.1:8001/login
+http://127.0.0.1:8001/
+```
+
+## Quick Run Commands
+
+Use these commands when the project is already set up on your computer:
+
+```bash
+cd summit-app
+composer install
+php bin/console cache:clear
+php -S 127.0.0.1:8001 -t public
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8001/
 ```
 
 ## Admin Access
