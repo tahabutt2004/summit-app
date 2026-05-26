@@ -439,40 +439,6 @@
                     text-decoration-color: var(--ism-navy);
                 }
 
-                .ism-action-bar {
-                    position: relative;
-                    z-index: 9;
-                    background: var(--ism-navy);
-                    box-shadow: 0 -12px 30px rgba(0, 47, 95, 0.12);
-                    margin-top: 40px;
-                }
-
-                .ism-action-bar .container {
-                    min-height: 72px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: clamp(18px, 8vw, 140px);
-                    flex-wrap: wrap;
-                }
-
-                .ism-action-link {
-                    color: #ffffff;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-size: 1rem;
-                    font-weight: 700;
-                    text-decoration: none;
-                    padding: 0.85rem 1rem;
-                    border-radius: 12px;
-                    transition: background 180ms ease, color 180ms ease;
-                }
-
-                .ism-action-link:hover,
-                .ism-action-link:focus {
-                    color: var(--ism-navy);
-                    background: var(--ism-yellow);
-                }
-
                 @media (max-width: 991.98px) {
                     .talwar-nav .container {
                         min-height: auto;
@@ -564,20 +530,6 @@
             </nav>
 
             {% block body %}{% endblock %}
-
-            <footer class="ism-action-bar">
-                <div class="container">
-                    {% if app.user %}
-                        <a class="ism-action-link" href="{{ path('app_summit_register') }}">Summit Registration</a>
-                        <a class="ism-action-link" href="{{ path('app_my_bookings') }}">My Bookings</a>
-                        <a class="ism-action-link" href="{{ path('app_profile') }}">Profile</a>
-                    {% else %}
-                        <a class="ism-action-link" href="{{ path('app_login') }}">Login</a>
-                        <a class="ism-action-link" href="{{ path('app_register') }}">Create Account</a>
-                        <a class="ism-action-link" href="{{ path('app_login') }}">ISM Data Science Summit</a>
-                    {% endif %}
-                </div>
-            </footer>
         </div>
     </body>
 </html>
