@@ -11,14 +11,14 @@ final class Version20260524124500 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create profile change log fields and relation to Taha.';
+        return 'Create profile change log fields and relation to Fateh.';
     }
 
     public function up(Schema $schema): void
     {
         if (!$schema->hasTable('profile_change_log')) {
             $this->addSql('CREATE TABLE profile_change_log (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, field_name VARCHAR(100) NOT NULL, old_value LONGTEXT DEFAULT NULL, new_value LONGTEXT DEFAULT NULL, changed_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_88B26A67A76ED395 (user_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`');
-            $this->addSql('ALTER TABLE profile_change_log ADD CONSTRAINT FK_88B26A67A76ED395 FOREIGN KEY (user_id) REFERENCES taha (id) ON DELETE CASCADE');
+            $this->addSql('ALTER TABLE profile_change_log ADD CONSTRAINT FK_88B26A67A76ED395 FOREIGN KEY (user_id) REFERENCES fateh (id) ON DELETE CASCADE');
 
             return;
         }
@@ -27,7 +27,7 @@ final class Version20260524124500 extends AbstractMigration
         if (!$table->hasColumn('user_id')) {
             $this->addSql('ALTER TABLE profile_change_log ADD user_id INT NOT NULL');
             $this->addSql('CREATE INDEX IDX_88B26A67A76ED395 ON profile_change_log (user_id)');
-            $this->addSql('ALTER TABLE profile_change_log ADD CONSTRAINT FK_88B26A67A76ED395 FOREIGN KEY (user_id) REFERENCES taha (id) ON DELETE CASCADE');
+            $this->addSql('ALTER TABLE profile_change_log ADD CONSTRAINT FK_88B26A67A76ED395 FOREIGN KEY (user_id) REFERENCES fateh (id) ON DELETE CASCADE');
         }
         if (!$table->hasColumn('field_name')) {
             $this->addSql('ALTER TABLE profile_change_log ADD field_name VARCHAR(100) NOT NULL');

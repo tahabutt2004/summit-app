@@ -26,10 +26,28 @@
             {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm, {'attr': {'class': 'd-grid gap-3'}}) }}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        {{ form_row(registrationForm.title) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(registrationForm.mealPreference) }}
+                    </div>
+                </div>
                 {{ form_row(registrationForm.email) }}
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Password'
                 }) }}
+                {{ form_row(registrationForm.newsletterConsent) }}
+                {{ form_row(registrationForm.dataProtectionConsent) }}
                 {{ form_row(registrationForm.agreeTerms) }}
 
                 <button type="submit" class="btn btn-forge btn-lg mt-2">Register</button>

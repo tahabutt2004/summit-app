@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Taha;
+use App\Entity\Fateh;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -10,13 +10,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
- * @extends ServiceEntityRepository<Taha>
+ * @extends ServiceEntityRepository<Fateh>
  */
-class TahaRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class FatehRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Taha::class);
+        parent::__construct($registry, Fateh::class);
     }
 
     /**
@@ -24,7 +24,7 @@ class TahaRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        if (!$user instanceof Taha) {
+        if (!$user instanceof Fateh) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
 
@@ -34,7 +34,7 @@ class TahaRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 //    /**
-//     * @return Taha[] Returns an array of Taha objects
+//     * @return Fateh[] Returns an array of Fateh objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -48,7 +48,7 @@ class TahaRepository extends ServiceEntityRepository implements PasswordUpgrader
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Taha
+//    public function findOneBySomeField($value): ?Fateh
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')

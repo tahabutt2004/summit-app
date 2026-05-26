@@ -14,9 +14,9 @@ class ProfileChangeLog
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Taha::class)]
+    #[ORM\ManyToOne(targetEntity: Fateh::class)]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private ?Taha $user = null;
+    private ?Fateh $user = null;
 
     #[ORM\Column(length: 100)]
     private ?string $fieldName = null;
@@ -35,12 +35,12 @@ class ProfileChangeLog
         return $this->id;
     }
 
-    public function getUser(): ?Taha
+    public function getUser(): ?Fateh
     {
         return $this->user;
     }
 
-    public function setUser(?Taha $user): static
+    public function setUser(?Fateh $user): static
     {
         $this->user = $user;
 

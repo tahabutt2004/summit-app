@@ -5,7 +5,7 @@ security:
     providers:
         app_user_provider:
             entity:
-                class: App\Entity\Taha
+                class: App\Entity\Fateh
                 property: email
 
     firewalls:

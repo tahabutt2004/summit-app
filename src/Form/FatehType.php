@@ -2,14 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Taha;
+use App\Entity\Fateh;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TahaType extends AbstractType
+class FatehType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -36,7 +36,7 @@ class TahaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Taha::class,
+            'data_class' => Fateh::class,
         ]);
     }
 }

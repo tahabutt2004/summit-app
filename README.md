@@ -129,6 +129,6 @@ php -S 127.0.0.1:8001 -t public
 
 ## Notes
 
-- The project uses the `Taha` entity as the user entity.
+- The project uses the `Fateh` entity as the user entity.
 - The `vendor/` and `var/` folders are ignored and should not be uploaded to GitHub.
 - Use `composer install` after cloning to restore dependencies.

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Taha;
+use App\Entity\Fateh;
 use App\Entity\ProfileChangeLog;
-use App\Form\TahaType;
+use App\Form\FatehType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ final class ProfileController extends AbstractController
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        if (!$user instanceof Taha) {
+        if (!$user instanceof Fateh) {
             throw $this->createAccessDeniedException();
         }
 
@@ -38,7 +38,7 @@ final class ProfileController extends AbstractController
             'dataProtectionConsent' => $user->isDataProtectionConsent(),
         ];
 
-        $form = $this->createForm(TahaType::class, $user);
+        $form = $this->createForm(FatehType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

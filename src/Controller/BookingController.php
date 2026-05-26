@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Taha;
+use App\Entity\Fateh;
 use App\Entity\Registration;
 use App\Form\RegistrationBookingType;
 use App\Repository\RegistrationRepository;
@@ -20,7 +20,7 @@ final class BookingController extends AbstractController
     public function register(Request $request, EntityManagerInterface $entityManager, RegistrationRepository $registrationRepository): Response
     {
         $user = $this->getUser();
-        if (!$user instanceof Taha) {
+        if (!$user instanceof Fateh) {
             throw $this->createAccessDeniedException();
         }
 
@@ -75,7 +75,7 @@ final class BookingController extends AbstractController
     public function myBookings(RegistrationRepository $registrationRepository): Response
     {
         $user = $this->getUser();
-        if (!$user instanceof Taha) {
+        if (!$user instanceof Fateh) {
             throw $this->createAccessDeniedException();
         }
 
@@ -104,7 +104,7 @@ final class BookingController extends AbstractController
     public function cancel(Request $request, Registration $registration, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        if (!$user instanceof Taha || $registration->getUser()?->getId() !== $user->getId()) {
+        if (!$user instanceof Fateh || $registration->getUser()?->getId() !== $user->getId()) {
             throw $this->createAccessDeniedException();
         }
 

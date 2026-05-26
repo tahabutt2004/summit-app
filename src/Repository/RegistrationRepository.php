@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Taha;
+use App\Entity\Fateh;
 use App\Entity\Registration;
 use App\Entity\SummitLocation;
 use Doctrine\ORM\QueryBuilder;
@@ -34,7 +34,7 @@ class RegistrationRepository extends ServiceEntityRepository
     /**
      * @return Registration[]
      */
-    public function findBookingsForUser(Taha $user): array
+    public function findBookingsForUser(Fateh $user): array
     {
         return $this->createQueryBuilder('registration')
             ->addSelect('summitLocation')
@@ -46,7 +46,7 @@ class RegistrationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findActiveForUserAndSummitLocation(Taha $user, SummitLocation $summitLocation): ?Registration
+    public function findActiveForUserAndSummitLocation(Fateh $user, SummitLocation $summitLocation): ?Registration
     {
         return $this->createQueryBuilder('registration')
             ->andWhere('registration.user = :user')
